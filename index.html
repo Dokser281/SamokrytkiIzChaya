@@ -1,1 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ОФИЦИАЛЬНЫЙ МИЛЛИАРДЕР</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #050505; 
+            color: #ffffff; 
+            font-family: 'Arial', sans-serif; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
+            position: relative;
+            transition: transform 1s ease;
+        }
 
+        /* Эффект пьяного экрана */
+        .drunk {
+            animation: drunkAnim 3s ease-in-out infinite alternate;
+        }
+        @keyframes drunkAnim {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(3deg) scale(1.02); }
+            100% { transform: rotate(-3deg) scale(0.98); }
+        }
+
+        .container { text-align: center; z-index: 10; }
+
+        .main-btn {
+            background: linear-gradient(45deg, #ff0055, #ffcc00, #00ffcc, #ff0055);
+            background-size: 300%; 
+            border: none; 
+            padding: 35px 70px; 
+            font-size: 3rem; 
+            text-transform: uppercase; 
+            font-weight: bold; 
+            color: #fff; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            box-shadow: 0 0 40px rgba(255, 0, 85, 0.7);
+            animation: rainbow 2s linear infinite; 
+            transition: transform 0.1s;
+        }
+
+        .main-btn:hover { transform: scale(1.15) rotate(3deg); }
+
+        @keyframes rainbow { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
+        }
+
+        /* Спам-окна скама (появляются вдали от центра) */
+        .scam-popup {
+            position: absolute;
+            background: #1a1a1a;
+            border: 3px solid #ff0055;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            z-index: 1000;
+            text-align: center;
+            animation: popIn 0.3s ease;
+            max-width: 280px;
+        }
+
+        .scam-popup h3 { color: #ffcc00; margin-bottom: 10px; font-size: 1.1rem; }
+        .scam-popup p { color: #ccc; font-size: 0.85rem; margin-bottom: 15px; }
+
+        .scam-popup button {
+            background: #ff0055;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Синий экран смерти (BSOD) */
+        #bsod {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #0078d7; color: white; z-index: 99999;
+            display: none; padding: 80px; font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        #bsod h1 { font-size: 6rem; margin-bottom: 20px; }
+        #bsod p { font-size: 1.8rem; line-height: 1.5; }
+    </style>
+</head>
+<body id="mainBody">
+
+    <div class="container">
+        <button class="main-btn" id="mainButton">Пошёл нахуй</button>
+        <p style="margin-top:25px; color:#666; font-size: 1.2rem;">Нажми, чтобы запустить хаос</p>
+    </div>
+
+    <!-- Синий экран смерти -->
+    <div id="bsod">
+        <h1>:(</h1>
+        <p>Ваш ПК столкнулся с проблемой и требует перезагрузки. Мы просто собираем данные о том, какой вы лох...</p>
+        <p style="margin-top: 40px; font-size: 1.2rem;">Нажмите любую клавишу, чтобы смириться (или перезагрузите страницу).</p>
+    </div>
+
+    <script>
+        const mainButton = document.getElementById('mainButton');
+        const mainBody = document.getElementById('mainBody');
+        const bsod = document.getElementById('bsod');
+        let clickCount = 0;
+
+        mainButton.addEventListener('click', () => {
+            clickCount++;
+
+            // Рикролл через каждые несколько кликов
+            if (clickCount % 3 === 0) {
+                window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+            }
+
+            // Включаем пьяный экран после 2 кликов
+            if (clickCount === 2) {
+                mainBody.classList.add('drunk');
+            }
+
+            // Показываем BSOD на 5 клик
+            if (clickCount === 5) {
+                bsod.style.display = 'block';
+                return;
+            }
+
+            // Спавним рандомную скам-штуку в безопасных зонах (далеко от центра)
+            spawnRandomScam();
+
+            // Ломаем кнопку размером
+            mainButton.style.fontSize = (parseFloat(window.getComputedStyle(mainButton).fontSize) + 4) + 'px';
+        });
+
+        function spawnRandomScam() {
+            const popup = document.createElement('div');
+            popup.className = 'scam-popup';
+            
+            // Выбираем случайные координаты по краям экрана, чтобы не перекрывать кнопку по центру
+            let x, y;
+            if (Math.random() > 0.5) {
+                x = Math.random() > 0.5 ? 50 : window.innerWidth - 350;
+                y = Math.random() * (window.innerHeight - 200);
+            } else {
+                x = Math.random() * (window.innerWidth - 300);
+                y = Math.random() > 0.5 ? 50 : window.innerHeight - 250;
+            }
+            popup.style.left = x + 'px';
+            popup.style.top = y + 'px';
+
+            const scams = [
+                {
+                    title: "📥 СКАЧАТЬ MINECRAFT 1.20 (БЕСПЛАТНО)",
+                    text: "Без вирусов, торрент файл уже готов к загрузке.",
+                    btnText: "СКАЧАТЬ",
+                    action: () => {
+                        // Идея 1: скачивание пустого файла-троллинга
+                        const blob = new Blob(["Ты реально думал, что тут будет Майнкрафт? Лох :("], {type: "text/plain;charset=utf-8"});
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(blob);
+                        link.download = "Minecraft_Free_Virus.exe";
+                        link.click();
+                    }
+                },
+                {
+                    title: "💬 ОНЛАЙН ЧАТ ПОДДЕРЖКИ",
+                    text: "Оператор Олег пишет: «Здравствуйте, вы выиграли кредит на 50 000 грн, оформляем?»",
+                    btnText: "ОФОРМИТЬ КРЕДИТ",
+                    action: () => {
+                        window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+                    }
+                },
+                {
+                    title: "🚨 ВНИМАНИЕ! ВАШ IP УКРАДЕН",
+                    text: `Ваш IP: 192.168.0.${Math.floor(Math.random()*255)} (город: Дно). Ваши данные слиты в TikTok!`,
+                    btnText: "УДАЛИТЬ СЕБЯ ИЗ ИНТЕРНЕТА",
+                    action: () => {
+                        alert("Не получилось, вы слишком популярный лох.");
+                        popup.remove();
+                    }
+                },
+                {
+                    title: "💸 ХОЧЕШЬ 1000 ГРИВЕН?",
+                    text: "Багатые спонсоры готовы скинуть тебе кэш на карту прямо сейчас!",
+                    btnText: "ЗАБРАТЬ 1000₴",
+                    action: () => {
+                        // Переход на картинку банкноты 1000 грн, как просил
+                        window.location.href = 'https://bank.gov.ua/banknote/1000uah/src/img/3d/1.png';
+                    }
+                }
+            ];
+
+            const currentScam = scams[Math.floor(Math.random() * scams.length)];
+
+            popup.innerHTML = `
+                <h3>${currentScam.title}</h3>
+                <p>${currentScam.text}</p>
+                <button id="scamBtn">${currentScam.btnText}</button>
+            `;
+
+            document.body.appendChild(popup);
+
+            popup.querySelector('#scamBtn').onclick = currentScam.action;
+
+            // Автоматическое удаление окна через 8 секунд, если не нажали
+            setTimeout(() => {
+                if(popup.parentElement) popup.remove();
+            }, 8000);
+        }
+
+        // Редкий фоновый спам (не раздражает слишком сильно, но появляется)
+        setInterval(() => {
+            if(Math.random() > 0.6 && document.querySelectorAll('.scam-popup').length < 3) {
+                spawnRandomScam();
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
