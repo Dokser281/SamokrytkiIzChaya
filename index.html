@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Самокрутки из чая — Классическая самокрутка</title>
+    <title>Самокрутки из чая — Каталог продукции</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -14,6 +14,7 @@
             --accent-hover: #4a705b;
             --text-main: #f0f4f1;
             --text-muted: #a0b0a5;
+            --danger: #d9534f;
             --border-color: rgba(255, 255, 255, 0.08);
             --transition: all 0.3s ease;
         }
@@ -82,6 +83,17 @@
             transform: translateY(-2px);
         }
 
+        .btn-disabled {
+            background-color: #33403a;
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .btn-disabled:hover {
+            transform: none;
+            background-color: #33403a;
+        }
+
         .cart-btn {
             position: relative;
             background: var(--card-bg);
@@ -144,7 +156,9 @@
         }
 
         .catalog-grid {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 340px));
+            gap: 25px;
             justify-content: center;
             margin-bottom: 40px;
         }
@@ -158,7 +172,6 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 340px;
         }
 
         .product-card:hover {
@@ -249,9 +262,11 @@
             font-weight: 600;
             backdrop-filter: blur(5px);
             z-index: 10;
-            background: rgba(92, 138, 112, 0.9);
             color: white;
         }
+
+        .status-in { background: rgba(92, 138, 112, 0.9); }
+        .status-out { background: rgba(217, 83, 79, 0.9); }
 
         .product-content {
             padding: 20px;
@@ -271,6 +286,7 @@
             font-size: 0.9rem;
             margin-bottom: 20px;
             line-height: 1.4;
+            flex-grow: 1;
         }
 
         .product-footer {
@@ -284,6 +300,43 @@
             font-size: 1.3rem;
             font-weight: 700;
             color: var(--text-main);
+        }
+
+        /* Блок FAQ */
+        .faq-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .faq-item {
+            background: rgba(18, 24, 21, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .faq-item h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+        }
+
+        .faq-item p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.5;
         }
 
         /* Корзина (Drawer) */
@@ -501,8 +554,8 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Экологичные сигареты из чая</h1>
-            <p>Уникальная альтернатива табаку без никотина. Чистый чайный лист в привычном формате самокрутки.</p>
+            <h1>Самокрутки из чая</h1>
+            <p>Ручная работа. Прямоугольный формат.</p>
             <a href="#catalog" class="btn"><i class="fa-solid fa-arrow-down"></i> Смотреть каталог</a>
         </div>
     </section>
@@ -511,9 +564,10 @@
         <h2 class="section-title">Каталог продукции</h2>
         
         <div class="catalog-grid">
+            <!-- Товар 1: Классическая самокрутка -->
             <div class="product-card">
                 <div class="product-slider" id="slider-1">
-                    <span class="status-badge">В наличии</span>
+                    <span class="status-badge status-in">В наличии</span>
                     <img src="https://cdn.phototourl.com/free/2026-08-12-c8efd144-f815-48be-82e1-df75e2b00f02.jpg" alt="Классическая самокрутка — фото 1" class="slide-img active">
                     <img src="https://cdn.phototourl.com/free/2026-08-12-f9e982ad-12e9-493f-980a-5b349deee3cf.jpg" alt="Классическая самокрутка — фото 2" class="slide-img">
                     <img src="https://cdn.phototourl.com/free/2026-08-12-c64c202c-7d73-478d-ac45-2a0b2e01a866.jpg" alt="Классическая самокрутка — фото 3" class="slide-img">
@@ -530,11 +584,90 @@
                 </div>
                 <div class="product-content">
                     <h3 class="product-title">Классическая самокрутка</h3>
-                    <p class="product-desc">Уникальная самокрутка ручной работы с чистым чайным вкусом. Цена указана за 1 штуку.</p>
+                    <p class="product-desc">Чайная самокрутка ручной работы. Цена за 1 штуку.</p>
                     <div class="product-footer">
                         <span class="product-price">25 грн</span>
-                        <button class="btn" onclick="addToCart()"><i class="fa-solid fa-cart-plus"></i></button>
+                        <button class="btn" onclick="addToCart(1)"><i class="fa-solid fa-cart-plus"></i></button>
                     </div>
+                </div>
+            </div>
+
+            <!-- Товар 2: Вкус с лавандой -->
+            <div class="product-card" style="opacity: 0.85;">
+                <div class="product-slider" id="slider-2">
+                    <span class="status-badge status-out">Нет в наличии</span>
+                    <img src="https://cdn.phototourl.com/free/2026-08-12-f9e982ad-12e9-493f-980a-5b349deee3cf.jpg" alt="Вкус с лавандой — фото 1" class="slide-img active">
+                    <img src="https://cdn.phototourl.com/free/2026-08-12-c8efd144-f815-48be-82e1-df75e2b00f02.jpg" alt="Вкус с лавандой — фото 2" class="slide-img">
+                    
+                    <button class="slider-btn prev" onclick="changeSlide(2, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="slider-btn next" onclick="changeSlide(2, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div class="slider-dots">
+                        <span class="dot active" onclick="goToSlide(2, 0)"></span>
+                        <span class="dot" onclick="goToSlide(2, 1)"></span>
+                    </div>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Вкус с лавандой</h3>
+                    <p class="product-desc">С ароматом лаванды. Цена за 1 штуку.</p>
+                    <div class="product-footer">
+                        <span class="product-price">28 грн</span>
+                        <button class="btn btn-disabled" onclick="alert('Этот товар сейчас отсутствует в наличии!')"><i class="fa-solid fa-ban"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Товар 3: Вкус с малиной -->
+            <div class="product-card" style="opacity: 0.85;">
+                <div class="product-slider" id="slider-3">
+                    <span class="status-badge status-out">Нет в наличии</span>
+                    <img src="https://cdn.phototourl.com/free/2026-08-12-c64c202c-7d73-478d-ac45-2a0b2e01a866.jpg" alt="Вкус с малиной — фото 1" class="slide-img active">
+                    <img src="https://cdn.phototourl.com/free/2026-08-12-3cea3351-3cf3-491c-8fb7-f4f1a0f9aee6.jpg" alt="Вкус с малиной — фото 2" class="slide-img">
+                    
+                    <button class="slider-btn prev" onclick="changeSlide(3, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="slider-btn next" onclick="changeSlide(3, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div class="slider-dots">
+                        <span class="dot active" onclick="goToSlide(3, 0)"></span>
+                        <span class="dot" onclick="goToSlide(3, 1)"></span>
+                    </div>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Вкус с малиной</h3>
+                    <p class="product-desc">С ароматом малины. Цена за 1 штуку.</p>
+                    <div class="product-footer">
+                        <span class="product-price">28 грн</span>
+                        <button class="btn btn-disabled" onclick="alert('Этот товар сейчас отсутствует в наличии!')"><i class="fa-solid fa-ban"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Раздел Часто задаваемые вопросы (FAQ) -->
+        <h2 class="section-title">Часто задаваемые вопросы</h2>
+        <div class="faq-section">
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>Как встретиться и забрать заказ?</h4>
+                    <p>Личные встречи для обмена товара на деньги проводятся строго в городе Харьков. После оформления заказа вы можете позвонить нашему менеджеру, чтобы договориться о встрече вживую.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Можно ли заказать доставку Новой Почтой?</h4>
+                    <p>Да, помимо личных встреч в Харькове, мы также отправляем заказы ежедневно через оператора Новая Почта.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Соблюдается ли конфиденциальность?</h4>
+                    <p>Да, все заказы упаковываются максимально надежно и конфиденциально.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Какая цена за штуку?</h4>
+                    <p>Цена за 1 единицу товара указана прямо в карточке каталога.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>В какое время можно связаться?</h4>
+                    <p>Менеджеры на связи ежедневно с 9:00 до 20:00 без выходных.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Как хранить дома?</h4>
+                    <p>Рекомендуем хранить в сухом месте при комнатной температуре.</p>
                 </div>
             </div>
         </div>
@@ -542,16 +675,16 @@
         <h2 class="section-title">Информация и доставка</h2>
         <div class="info-section">
             <div class="info-card">
-                <h3><i class="fa-solid fa-truck-fast"></i> Быстрая доставка</h3>
-                <p>Отправляем заказы Новой Почтой по всей Украине ежедневно. Конфиденциально и надежно.</p>
+                <h3><i class="fa-solid fa-handshake"></i> Личная встреча</h3>
+                <p>Встреча вживую (товар из рук в руки за деньги) доступна только в городе Харьков.</p>
             </div>
             <div class="info-card">
-                <h3><i class="fa-solid fa-seedling"></i> 0% Никотина</h3>
-                <p>Натуральный листовой чай тонкого помола без химических добавок и табака.</p>
+                <h3><i class="fa-solid fa-truck-fast"></i> Доставка почтой</h3>
+                <p>Также отправляем заказы Новой Почтой по всей территории.</p>
             </div>
             <div class="info-card">
                 <h3><i class="fa-solid fa-headset"></i> Поддержка клиентов</h3>
-                <p>Менеджеры на связи каждый день, чтобы ответить на любые ваши вопросы.</p>
+                <p>Менеджеры на связи каждый день для уточнения всех деталей.</p>
             </div>
         </div>
     </main>
@@ -578,7 +711,7 @@
         <div class="modal-content">
             <button class="close-modal" id="closeModal" style="position: absolute; top: 15px; right: 20px;"><i class="fa-solid fa-xmark"></i></button>
             <h3>Оформление заказа</h3>
-            <p>Для подтверждения и оформления заказа позвоните нашему менеджеру по номеру:</p>
+            <p>Для личной встречи в Харькове или отправки почтой свяжитесь с нашим менеджером по номеру:</p>
             <span class="phone-highlight">+380 (93) 254-06-03</span>
             <p style="font-size: 0.85rem; margin-bottom: 0;">Мы работаем ежедневно с 9:00 до 20:00.</p>
         </div>
@@ -589,10 +722,10 @@
     </footer>
 
     <script>
-        const product = {
-            id: 1,
-            name: "Классическая самокрутка",
-            price: 25
+        const productsData = {
+            1: { id: 1, name: "Классическая самокрутка", price: 25 },
+            2: { id: 2, name: "Вкус с лавандой", price: 28 },
+            3: { id: 3, name: "Вкус с малиной", price: 28 }
         };
 
         let cart = JSON.parse(localStorage.getItem('tea_cart')) || [];
@@ -643,8 +776,13 @@
             if (dots[index]) dots[index].classList.add('active');
         }
 
-        function addToCart() {
-            const cartItem = cart.find(item => item.id === product.id);
+        function addToCart(productId) {
+            if (productId === 2 || productId === 3) {
+                alert('Этот товар сейчас отсутствует в наличии!');
+                return;
+            }
+            const product = productsData[productId];
+            const cartItem = cart.find(item => item.id === productId);
             if (cartItem) {
                 cartItem.quantity += 1;
             } else {
@@ -724,7 +862,7 @@
 
         checkoutBtn.addEventListener('click', () => {
             if (cart.length === 0) {
-                alert('Добавьте товар в корзину перед оформлением!');
+                alert('Добавьте товары в корзину перед оформлением!');
                 return;
             }
             closeDrawerFunc();
